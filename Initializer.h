@@ -1,5 +1,9 @@
 #include<iostream>
 #include<cmath>
+#include "Constant.h"
+#include "GridField.h"
+
+
 using namespace std;
 
 class Initializer{

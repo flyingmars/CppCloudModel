@@ -1,5 +1,5 @@
 #include "GridField.h"
-#include "Constant.h"
+
 
 GridField :: GridField(void){
 

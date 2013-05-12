@@ -1,6 +1,7 @@
-#include <iostream>
 #include <cmath>
-#incdlue <cstdio>
+#include <cstdio>
+#include "Constant.h"
+#include "GridField.h"
 
 class Outputter{
 	public:

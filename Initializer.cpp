@@ -1,9 +1,8 @@
 #include "Initializer.h"
-#include "Constant.h"
-#include "GridField.h"
 
 // Public Interface
-void Initializer::perturbation_Initialization(GridField & grid){	
+
+void Initializer::baseState_OneDimension_Initialization(GridField & grid){	
 	const double x_k = R_D / C_P ;		
 	double tbv_previous,tbv_current,tbvavg;
 	
@@ -12,7 +11,7 @@ void Initializer::perturbation_Initialization(GridField & grid){
 	grid.qb[1]   = base_QvBar_Distribution(1);
 	tbv_previous = grid.tb[1]*(1 + 0.61*grid.qb[1] );
 	
-	grid.pib[1]  = pow(grid.pb[1]/PZERO,x_k) - Gravity*0.5*DZ/(C_P*tbv_previous);	
+	grid.pib[1]  = pow(grid.pb[1]/PZERO,x_k) - GRAVITY*0.5*DZ/(C_P*tbv_previous);	
 	grid.rhou[1] = PZERO * pow(grid.pib[1],C_V/R_D ) / ( R_D * tbv_previous );
 	grid.rhow[1] = grid.rhou[1];
 	
@@ -24,7 +23,7 @@ void Initializer::perturbation_Initialization(GridField & grid){
 		tbv_current = grid.tb[k]*(1 + 0.61*grid.qb[k] );
 		tbvavg = 0.5 * ( tbv_current + tbv_previous ) ;
 		
-		grid.pib[k] = grid.pib[k-1] - Gravity * DZ / (C_P * tbvavg) ;
+		grid.pib[k] = grid.pib[k-1] - GRAVITY * DZ / (C_P * tbvavg) ;
 		grid.pb[k]   = PZERO * pow(grid.pib[k],C_P/R_D);
 		grid.rhou[k] = PZERO * pow(grid.pib[k],C_V/R_D ) / ( R_D * tbvavg );
 		grid.rhow[k] = 0.5*( grid.rhou[k] + grid.rhou[k-1] );
@@ -80,7 +79,7 @@ void Initializer::perturbation_Initialization(GridField & grid){
 		for (int k=NZ-2;k>=1;k--) {
 			tup = grid.th[i][k+1]/( grid.tb[k+1] * grid.tb[k+1] );
 			tdn = th[i][k] / (grid.tb[k] * grid.tb[k]) ;
-			grid.pi[i][k] = grid.pi[i][k+1] - 0.5 * ( Gravity / C_P ) * ( tup + tdn ) * DZ;
+			grid.pi[i][k] = grid.pi[i][k+1] - 0.5 * ( GRAVITY / C_P ) * ( tup + tdn ) * DZ;
 			/* make sure the first step run correctly */
 			grid.pim[i][k] = grid.pi[i][k];
 		}

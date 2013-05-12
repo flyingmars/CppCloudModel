@@ -1,5 +1,7 @@
 #include<iostream>
 #include<cmath>
+#include "Constant.h"
+
 using namespace std;
 
 

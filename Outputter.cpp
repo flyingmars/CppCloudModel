@@ -1,6 +1,5 @@
 #include "Outputter.h"
-#include "Constant.h"
-#include "GridField.h"
+
 
 
 void Outputter::output_BaseState(GridField & grid){
