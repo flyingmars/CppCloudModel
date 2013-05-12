@@ -6,6 +6,9 @@ using namespace std;
 
 
 class GridField {
+	private :
+		int timePerGraph;
+		int currentTime;
 	public :
 		// Base state arrays
 		double tb[NZ];	
@@ -24,5 +27,8 @@ class GridField {
 
 		GridField(void);
 		
-		
+		// Get Set Functions
+		void SetGraphOutputTime(int toSet){ timePerGraph = toSet ; }
+		void SetCurrentTime(int toSet){ toSet = (toSet >= 0) ? toSet : 0  ; }
+		int GetCurrentTime(void){ return currentTime ; }
 };

@@ -1,6 +1,8 @@
 drawoption = input('Please input drawoption\n');
 dt = input('Please input dt\n');
-for i=0:149
+starttime = input('Please input start time\n')
+endtime = input('Please input end time\n')
+for i=starttime:dt:endtime
     switch(drawoption)
         case 0
             %Output Potential Temperature
@@ -8,7 +10,8 @@ for i=0:149
             plotOutput('th',i);
             caxis([-20 20]);
             colorbar;
-            title('Potential Temperature');    
+			titlestring = sprintf('Potential Temperature,t=%d',i);
+            title(titlestring);    
 
 
             %Output Nondimensional Pressure
@@ -16,7 +19,9 @@ for i=0:149
             plotOutput('pi',i);
             caxis([-25 25]);
             colorbar;
-            title('Nondimensional Pressure');
+			titlestring = sprintf('Nondimensional Pressure,t=%d',i);
+            title(titlestring);    			
+
 
 
             %Output Horizontal Wind Speed
@@ -24,7 +29,8 @@ for i=0:149
             plotOutput('u',i);
             caxis([-5 5]);
             colorbar;
-            title('Horizontal Wind Speed');	
+			titlestring = sprintf('Horizontal Wind Speed,t=%d',i);
+            title(titlestring);    			           
 
 
             %Output Vertical Wind Speed
@@ -32,35 +38,41 @@ for i=0:149
             plotOutput('w',i);
             caxis([-10 10]);
             colorbar;
-            title('Vertical Wind Speed');
+			titlestring = sprintf('Vertical Wind Speed,t=%d',i);
+            title(titlestring);    						
+
             
         case 1
             %Output Potential Temperature
             plotOutput('th',i);
             caxis([-20 20]);
             colorbar;
-            title(sprintf('Potential Temperature, time = %d',i*dt));    
+			titlestring = sprintf('Potential Temperature,t=%d',i);
+            title(titlestring);     
 
         case 2
             %Output Nondimensional Pressure
             plotOutput('pi',i);
             caxis([-25 25]);
             colorbar;
-            title(sprintf('Nondimensional Pressure, time = %d',i*dt));
+			titlestring = sprintf('Nondimensional Pressure,t=%d',i);
+            title(titlestring);    			
 
         case 3
             %Output Horizontal Wind Speed
             plotOutput('u',i);
             caxis([-5 5]);
             colorbar;
-            title(sprintf('Horizontal Wind Speed, time = %d',i*dt));	
+			titlestring = sprintf('Horizontal Wind Speed,t=%d',i);
+            title(titlestring);    	
 
         case 4
             %Output Vertical Wind Speed
             plotOutput('w',i);
             caxis([-10 10]);
             colorbar;
-            title(sprintf('Vertical Wind Speed, time = %d',i*dt));
+			titlestring = sprintf('Vertical Wind Speed,t=%d',i);
+            title(titlestring);    						
     end
     
     pause(0.2);  

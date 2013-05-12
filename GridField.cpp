@@ -21,7 +21,9 @@ GridField :: GridField(void){
 		pib[k] = 0;	
 		rhou[k] = 0;	
 		rhow[k] = 0;	
+		
 	}	
-
-
+	
+	timePerGraph = DT ;
+	currentTime = 0;
 }
