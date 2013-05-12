@@ -49,8 +49,8 @@ void LeapFrogMethod::compute_dw_dt(GridField & grid){
 								 -0.25 * grid.rhou[k-1]* (grid.w[i][k  ] + grid.w[i][k-1])*( grid.w[i][k  ] + grid.w[i][k-1]) ) / grid.rhow[k]
 						- C_P * DT * ( grid.tb[k] + grid.tb[k-1] ) * ( grid.pi[i][k] - grid.pi[i][k-1] ) / DZ 
 						+ GRAVITY * DT * ( ( grid.th[i][k] / grid.tb[k] ) + ( grid.th[i][k-1] / grid.tb[k-1] ) ) 
-						DTX * KX/DX * (  grid.w[i+1][k]- 2*grid.w[i][k] + grid.w[i-1][k] ) 			
-						DTZ * KZ/DZ * (  grid.w[i][k+1]- 2*grid.w[i][k] + grid.w[i][k-1] )	/* Diffusion Term */
+						+DTX * KX/DX * (  grid.w[i+1][k]- 2*grid.w[i][k] + grid.w[i-1][k] ) 			
+						+DTZ * KZ/DZ * (  grid.w[i][k+1]- 2*grid.w[i][k] + grid.w[i][k-1] )	/* Diffusion Term */
 						+ grid.wm[i][k] ;
 		}
 	}
