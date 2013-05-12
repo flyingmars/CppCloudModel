@@ -2,7 +2,12 @@
 
 
 GridField :: GridField(void){
+	GridField(1);
+}
 
+
+GridField :: GridField(int inputTimePerGraph){
+	
 	/* Make sure initial value are all zeros  */
 	
 	for (int i=0;i<NX;i++){
@@ -24,6 +29,7 @@ GridField :: GridField(void){
 		
 	}	
 	
-	timePerGraph = DT ;
+	timePerGraph = inputTimePerGraph ;
 	currentTime = 0;
+
 }

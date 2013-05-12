@@ -27,9 +27,11 @@ class GridField {
 		
 		// Constructor
 		GridField(void);
+		GridField(int);
 		
 		// Get Set Functions
 		void SetGraphOutputTime(int toSet){ timePerGraph = toSet ; }
+		void GetGraphOutputTime(void){ return timePerGraph ; }
 		void SetCurrentTime(int toSet){ currentTime = (toSet >= 0) ? toSet : 0  ; }
 		int GetCurrentTime(void){ return currentTime ; }
 };
