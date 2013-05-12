@@ -1,18 +1,19 @@
 #include <iostream>
-#include "Outputter.h"
+#include "LeapFrogMethod.h"
 
 
 
 int main ( int argc , char ** argv ){
 	
 	GridField grid ;
-	Outputter outputter;
-	Initializer initializer;
 	
-	initializer.baseState_OneDimension_Initialization(grid);
-	outputter.output_BaseState(grid);
-	initializer.perturbation_Initialization(grid);
-	outputter.outputCurrentTimestep(grid);
+	
+	Initializer.baseState_OneDimension_Initialization(grid);
+	Initializer.perturbation_Initialization(grid);
+
+	Outputter.output_BaseState(grid);
+	LeapFrogMethod.compute_all(grid);
+	
 	
 	return 0;
 

@@ -2,8 +2,10 @@
 #define R_D (287)
 #define C_P (1004)
 #define C_V (C_P - R_D)
+#define C_S (50)
 #define PZERO (100000)
 #define PSURF (96500)
+
 
 
 #define NX (83)
@@ -14,4 +16,7 @@
 #define KX (100)
 #define KZ (20)
 
-	
+
+
+#define DTX (2 * DT / DX)
+#define DTZ (2 * DT / DX)	

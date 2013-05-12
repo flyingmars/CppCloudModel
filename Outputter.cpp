@@ -2,7 +2,7 @@
 
 
 
-void Outputter::output_BaseState(GridField & grid){
+static void Outputter::output_BaseState(GridField & grid){
 
 	double z_T;
 	
@@ -18,7 +18,7 @@ void Outputter::output_BaseState(GridField & grid){
 }
 
 
-void Outputter::outputCurrentTimestep(GridField &grid){
+static void Outputter::outputCurrentTimestep(GridField &grid){
 	
 	output_th(grid);
 	output_w(grid);
@@ -30,7 +30,7 @@ void Outputter::outputCurrentTimestep(GridField &grid){
 
 
 
-void Outputter::output_th(GridField & grid){
+static void Outputter::output_th(GridField & grid){
 	char outputString[100]; sprintf(outputString,"./%d_%s.txt",grid.GetCurrentTime(),"th");
 	FILE* fp = fopen(outputString,"wb");
 	
@@ -48,7 +48,7 @@ void Outputter::output_th(GridField & grid){
 	return ;
 
 }
-void Outputter::output_w(GridField & grid){
+static void Outputter::output_w(GridField & grid){
 	char outputString[100]; sprintf(outputString,"./%d_%s.txt",grid.GetCurrentTime(),"w");
 	FILE* fp = fopen(outputString,"wb");
 	
@@ -65,7 +65,7 @@ void Outputter::output_w(GridField & grid){
 	
 	return ;
 }
-void Outputter::output_u(GridField & grid){
+static void Outputter::output_u(GridField & grid){
 	char outputString[100]; sprintf(outputString,"./%d_%s.txt",grid.GetCurrentTime(),"u");
 	FILE* fp = fopen(outputString,"wb");
 	
@@ -82,7 +82,7 @@ void Outputter::output_u(GridField & grid){
 	
 	return ;
 }
-void Outputter::output_pi(GridField & grid){
+static void Outputter::output_pi(GridField & grid){
 	char outputString[100]; sprintf(outputString,"./%d_%s.txt",grid.GetCurrentTime(),"pi");
 	FILE* fp = fopen(outputString,"wb");
 	

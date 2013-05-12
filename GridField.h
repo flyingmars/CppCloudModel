@@ -9,6 +9,7 @@ class GridField {
 	private :
 		int timePerGraph;
 		int currentTime;
+		
 	public :
 		// Base state arrays
 		double tb[NZ];	
@@ -24,11 +25,11 @@ class GridField {
 		double wp[NX][NZ]	, w[NX][NZ]	,wm[NX][NZ];
 		double pip[NX][NZ]	,pi[NX][NZ]	,pim[NX][NZ];
 		
-
+		// Constructor
 		GridField(void);
 		
 		// Get Set Functions
 		void SetGraphOutputTime(int toSet){ timePerGraph = toSet ; }
-		void SetCurrentTime(int toSet){ toSet = (toSet >= 0) ? toSet : 0  ; }
+		void SetCurrentTime(int toSet){ currentTime = (toSet >= 0) ? toSet : 0  ; }
 		int GetCurrentTime(void){ return currentTime ; }
 };

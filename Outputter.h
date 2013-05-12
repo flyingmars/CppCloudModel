@@ -7,13 +7,13 @@
 class Outputter{
 
 	private:
-		void output_th(GridField &);
-		void output_w(GridField &);
-		void output_u(GridField &);
-		void output_pi(GridField &);
+		static void output_th(GridField &);
+		static void output_w(GridField &);
+		static void output_u(GridField &);
+		static void output_pi(GridField &);
 		
 	public:
-		void output_BaseState(GridField &) ;
-		void outputCurrentTimestep(GridField &) ;
+		static void output_BaseState(GridField &) ;
+		static void outputCurrentTimestep(GridField &) ;
 		
 };

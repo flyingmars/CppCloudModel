@@ -8,9 +8,9 @@ using namespace std;
 
 class Initializer{
 	public :
-		void perturbation_Initialization(GridField & );
-		void baseState_OneDimension_Initialization(GridField & );
+		static void perturbation_Initialization(GridField & );
+		static void baseState_OneDimension_Initialization(GridField & );
 	private :
-		double base_ThetaBar_Distribution(int );
-		double base_QvBar_Distribution(int );
+		static double base_ThetaBar_Distribution(int );
+		static double base_QvBar_Distribution(int );
 };
