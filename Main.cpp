@@ -1,16 +1,15 @@
 #include <iostream>
-#include "GridField.h"
-#include "Initializer.h"
-#include "LeapFrogMethod.h"
 #include "Outputter.h"
 
 
 
-int main ( int argc , char ** argv[] ){
+int main ( int argc , char ** argv ){
 	
 	GridField grid ;
 	Outputter outputter;
-
+	Initializer initializer;
+	
+	initializer.baseState_OneDimension_Initialization(grid);
 	outputter.output_BaseState(grid);
 	
 	

@@ -78,7 +78,7 @@ void Initializer::perturbation_Initialization(GridField & grid){
 		
 		for (int k=NZ-2;k>=1;k--) {
 			tup = grid.th[i][k+1]/( grid.tb[k+1] * grid.tb[k+1] );
-			tdn = th[i][k] / (grid.tb[k] * grid.tb[k]) ;
+			tdn = grid.th[i][k] / (grid.tb[k] * grid.tb[k]) ;
 			grid.pi[i][k] = grid.pi[i][k+1] - 0.5 * ( GRAVITY / C_P ) * ( tup + tdn ) * DZ;
 			/* make sure the first step run correctly */
 			grid.pim[i][k] = grid.pi[i][k];

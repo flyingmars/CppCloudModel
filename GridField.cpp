@@ -14,7 +14,7 @@ GridField :: GridField(void){
 		}
 	}
 	
-	for (int k=0;i<NZ;i++){
+	for (int k=0;k<NZ;k++){
 		tb[k] = 0;	
 		qb[k] = 0;	
 		pb[k] = 0;	

@@ -5,8 +5,8 @@ CC=$(COMPILER) $(CFALGS)
 RM=rm -rf
 
 OUTPUT=model.exe
-ALLFILES=Outtputter.o Initializer.o GridField.o LeapFrogMethod.o
-MAIN=main.cpp
+ALLFILES=Outputter.o Initializer.o GridField.o LeapFrogMethod.o
+MAIN=Main.cpp
 
 all: $(ALLFILES)
 	$(CC) $(MAIN) $(ALLFILES) -o $(OUTPUT)

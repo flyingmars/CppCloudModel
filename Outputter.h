@@ -1,7 +1,7 @@
 #include <cmath>
 #include <cstdio>
 #include "Constant.h"
-#include "GridField.h"
+#include "Initializer.h"
 
 class Outputter{
 	public:
