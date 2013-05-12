@@ -19,11 +19,12 @@ void Outputter::output_BaseState(GridField & grid){
 
 
 void Outputter::outputCurrentTimestep(GridField &grid){
-	if( grid.GetCurrentTime()/DT % grid.GetGraphOutputTime() == 0 )
+	if( grid.GetCurrentTime()/DT % grid.GetGraphOutputTime() == 0 ){
 		output_th(grid);
 		output_w(grid);
 		output_u(grid);
 		output_pi(grid);
+	}
 	return ;
 }
 

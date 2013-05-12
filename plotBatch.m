@@ -2,7 +2,8 @@ drawoption = input('Please input drawoption\n');
 dt = input('Please input dt\n');
 starttime = input('Please input start time\n');
 endtime = input('Please input end time\n');
-for i=starttime:dt:endtime
+outputperGraph = input('Please output per graph\n')
+for i=starttime:(outputperGraph*dt):endtime
     switch(drawoption)
         case 0
             %Output Potential Temperature
