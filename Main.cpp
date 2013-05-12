@@ -12,7 +12,7 @@ int main ( int argc , char ** argv ){
 	initializer.baseState_OneDimension_Initialization(grid);
 	outputter.output_BaseState(grid);
 	initializer.perturbation_Initialization(grid);
-	outputter.outputCurrentTimestep.(grid);
+	outputter.outputCurrentTimestep(grid);
 	
 	return 0;
 

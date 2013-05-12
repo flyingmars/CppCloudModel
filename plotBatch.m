@@ -1,7 +1,7 @@
 drawoption = input('Please input drawoption\n');
 dt = input('Please input dt\n');
-starttime = input('Please input start time\n')
-endtime = input('Please input end time\n')
+starttime = input('Please input start time\n');
+endtime = input('Please input end time\n');
 for i=starttime:dt:endtime
     switch(drawoption)
         case 0
@@ -76,5 +76,7 @@ for i=starttime:dt:endtime
     end
     
     pause(0.2);  
-    clf;
+    if (starttime + dt <= endtime )
+        clf;
+    end
 end
