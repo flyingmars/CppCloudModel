@@ -2,7 +2,7 @@
 
 // Public Interface
 
-static void Initializer::baseState_OneDimension_Initialization(GridField & grid){	
+void Initializer::baseState_OneDimension_Initialization(GridField & grid){	
 	const double x_k = R_D / C_P ;		
 	double tbv_previous,tbv_current,tbvavg;
 	
@@ -40,11 +40,11 @@ static void Initializer::baseState_OneDimension_Initialization(GridField & grid)
 
 }
 
-static void Initializer::perturbation_Initialization(GridField & grid){
+void Initializer::perturbation_Initialization(GridField & grid){
 	const double TRIGPI = 4.*atan(1.0);
 	const double imid   =  (NX%2 == 0) ? NX/2 : (NX-1)/2 ;
 	const double zcnt   =  3000 ;
-	const double delta  =  -5.0;
+	const double delta  =  5.0;
 	const double radx	=4000.0 , radz = 4000.0;
 
 
@@ -93,7 +93,7 @@ static void Initializer::perturbation_Initialization(GridField & grid){
 
 
 /* Private Function */
-static double Initializer::base_ThetaBar_Distribution(int z_grid_index){
+double Initializer::base_ThetaBar_Distribution(int z_grid_index){
 
 	const double z_TR = 12000; 			//[m] Height level of Tropopause
 	const double T_TR = 213;			//[K] Temperature of Tropopause
@@ -109,7 +109,7 @@ static double Initializer::base_ThetaBar_Distribution(int z_grid_index){
 }
 
 
-static double Initializer::base_QvBar_Distribution(int z_grid_index){
+double Initializer::base_QvBar_Distribution(int z_grid_index){
 	
 	double z_T = ( (double)z_grid_index - 0.5) * DZ ;
 	

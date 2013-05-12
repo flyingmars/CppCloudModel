@@ -1,7 +1,7 @@
 #include "LeapFrogMethod.h"
 
 
-static void LeapFrogMethod::compute_du_dt(GridField & grid){
+void LeapFrogMethod::compute_du_dt(GridField & grid){
 	
 	/* Main function calculate du_dt */
 	for (int k=1;k<NZ-1;k++){
@@ -36,7 +36,7 @@ static void LeapFrogMethod::compute_du_dt(GridField & grid){
 
 
 }
-static void LeapFrogMethod::compute_dw_dt(GridField & grid){
+void LeapFrogMethod::compute_dw_dt(GridField & grid){
 
 
 	
@@ -70,7 +70,7 @@ static void LeapFrogMethod::compute_dw_dt(GridField & grid){
 
 
 }
-static void LeapFrogMethod::compute_dtheta_dt(GridField & grid){
+void LeapFrogMethod::compute_dtheta_dt(GridField & grid){
 	
 	for (int k=1;k<NZ-1;k++){
 		for (int i=1;i<NX-1;i++){	
@@ -102,7 +102,7 @@ static void LeapFrogMethod::compute_dtheta_dt(GridField & grid){
 
 
 }
-static void LeapFrogMethod::compute_dpi_dt(GridField & grid){
+void LeapFrogMethod::compute_dpi_dt(GridField & grid){
 
 	const double c_s2 = C_S * C_S ; // sound speed (adiabatic)
 	
@@ -133,12 +133,12 @@ static void LeapFrogMethod::compute_dpi_dt(GridField & grid){
 
 
 }
-static void LeapFrogMethod::compute_all(GridField & grid , int timend){
+void LeapFrogMethod::compute_all(GridField & grid , int timend){
 	
 	int currentTime = 0;
 	
 	// Output Base Condition
-	Outputter.outputCurrentTimestep(grid);
+	Outputter::outputCurrentTimestep(grid);
 	
 	while ( currentTime < timend){
 
@@ -160,11 +160,11 @@ static void LeapFrogMethod::compute_all(GridField & grid , int timend){
 
 		/* timestep routine */
 		currentTime += DT ;
-		grid.SetCurrentTime(currentTime)
+		grid.SetCurrentTime(currentTime);
 		
 		
 		/* output routine */
-		Outputter.outputCurrentTimestep(grid);
+		Outputter::outputCurrentTimestep(grid);
 	}
 	
 	printf("Output Time=0 to Time= %d\n",timend);

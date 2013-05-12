@@ -12,7 +12,7 @@
 #define NZ (42)
 #define DX (400)
 #define DZ (400)
-#define DT (2)
+#define DT (10)
 #define KX (100)
 #define KZ (20)
 
