@@ -42,10 +42,10 @@ void Initializer::baseState_OneDimension_Initialization(GridField & grid){
 
 void Initializer::perturbation_Initialization(GridField & grid){
 	const double TRIGPI = 4.*atan(1.0);
-	const double imid   =  (NX%2 == 0) ? NX/2 : (NX-1)/2 ;
+	const double imid   =  (NX%2 == 0) ? (double)NX/2 : ((double)NX-1.0)/2 ;
 	const double zcnt   =  3000 ;
-	const double delta  =  10.0;
-	const double radx	=4000.0 , radz = 4000.0;
+	const double delta  =  5.0;
+	const double radx   =  4000.0 , radz = 4000.0;
 
 
 	
@@ -58,9 +58,9 @@ void Initializer::perturbation_Initialization(GridField & grid){
 	/* Create Theta perturbation */
 	for (int i=1;i<=NX-2;i++){
 		for (int k=1;k<=NZ-2;k++){
-			currentRad = sqrt( pow( (z_scalar - zcnt)/radz , 2 ) + pow( DX*( i - imid )/radx , 2 ) ) ;
 			z_scalar = DZ * (k - 0.5);
-			
+			currentRad = sqrt( pow( (z_scalar - zcnt)/radz , 2 ) + pow( DX*( i - imid )/radx , 2 ) ) ;
+
 			if ( currentRad >= 1 ){
 				grid.th[i][k] = 0;
 			}else{
