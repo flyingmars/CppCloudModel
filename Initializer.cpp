@@ -44,7 +44,7 @@ void Initializer::perturbation_Initialization_Cold(GridField & grid){
 	const double TRIGPI = 4.*atan(1.0);
 	const double imid   =  (NX%2 == 0) ? (double)NX/2 : ((double)NX-1.0)/2 ;
 	const double zcnt   =  3000 ;
-	const double delta  =  5.0;
+	const double delta  =  -15.0;
 	const double radx   =  4000.0 , radz = 2000.0;
 
 

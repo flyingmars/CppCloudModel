@@ -2,13 +2,20 @@ drawoption = input('Please input drawoption\n');
 dt = input('Please input dt\n');
 starttime = input('Please input start time\n');
 endtime = input('Please input end time\n');
-outputperGraph = input('Please output per graph\n')
+outputperGraph = input('Please output per graph\n');
+
+thfid = fopen('th.txt','r');
+wfid = fopen('w.txt','r');
+ufid = fopen('u.txt','r');
+pifid = fopen('pi.txt','r');
+
 for i=starttime:(outputperGraph*dt):endtime
+
     switch(drawoption)
         case 0
             %Output Potential Temperature
             subplot(2,2,1);
-            plotOutput('th',i);
+            plotOutput(thfid);
             caxis([-20 20]);
             colorbar;
 			titlestring = sprintf('Potential Temperature,t=%d',i);
@@ -17,7 +24,7 @@ for i=starttime:(outputperGraph*dt):endtime
 
             %Output Nondimensional Pressure
             subplot(2,2,2);
-            plotOutput('pi',i);
+            plotOutput(wfid);
             caxis([-25 25]);
             colorbar;
 			titlestring = sprintf('Nondimensional Pressure,t=%d',i);
@@ -27,8 +34,8 @@ for i=starttime:(outputperGraph*dt):endtime
 
             %Output Horizontal Wind Speed
             subplot(2,2,3);
-            plotOutput('u',i);
-            caxis([-5 5]);
+            plotOutput(ufid);
+            caxis([-20 20]);
             colorbar;
 			titlestring = sprintf('Horizontal Wind Speed,t=%d',i);
             title(titlestring);    			           
@@ -36,7 +43,7 @@ for i=starttime:(outputperGraph*dt):endtime
 
             %Output Vertical Wind Speed
             subplot(2,2,4);
-            plotOutput('w',i);
+            plotOutput(pifid);
             caxis([-10 10]);
             colorbar;
 			titlestring = sprintf('Vertical Wind Speed,t=%d',i);
@@ -45,7 +52,7 @@ for i=starttime:(outputperGraph*dt):endtime
             
         case 1
             %Output Potential Temperature
-            plotOutput('th',i);
+            plotOutput(thfid);
             caxis([-20 20]);
             colorbar;
 			titlestring = sprintf('Potential Temperature,t=%d',i);
@@ -53,7 +60,7 @@ for i=starttime:(outputperGraph*dt):endtime
 
         case 2
             %Output Nondimensional Pressure
-            plotOutput('pi',i);
+            plotOutput(pifid);
             caxis([-25 25]);
             colorbar;
 			titlestring = sprintf('Nondimensional Pressure,t=%d',i);
@@ -61,23 +68,29 @@ for i=starttime:(outputperGraph*dt):endtime
 
         case 3
             %Output Horizontal Wind Speed
-            plotOutput('u',i);
-            caxis([-5 5]);
+            plotOutput(ufid);
+            caxis([-20 20]);
             colorbar;
 			titlestring = sprintf('Horizontal Wind Speed,t=%d',i);
             title(titlestring);    	
 
         case 4
             %Output Vertical Wind Speed
-            plotOutput('w',i);
+            plotOutput(wfid);
             caxis([-10 10]);
             colorbar;
 			titlestring = sprintf('Vertical Wind Speed,t=%d',i);
             title(titlestring);    						
     end
     
-    pause(0.2);  
+    pause(0.01);  
     if (starttime + dt <= endtime )
         clf;
     end
 end
+
+fclose(thfid) ;
+fclose(wfid) ;
+fclose(ufid);
+fclose(pifid);
+

@@ -13,12 +13,13 @@ void LeapFrogMethod::compute_du_dt(GridField & grid){
 											   -grid.rhow[k  ] *( grid.w[i][k  ]+ grid.w[i-1][k  ] )
 														  *( grid.u[i][k-1]+ grid.u[i  ][k  ] )) / grid.rhou[k] 
 							    - DTX * C_P * grid.tb[k] * ( grid.pi[i][k] - grid.pi[i-1][k] ) 
-								
+#ifdef DIFFUSION								
 								+ DTX * (double)KX/(double)DX * (grid.u[i+1][k] - 2.*grid.u[i][k] + grid.u[i-1][k]) /* Diffusion Term */
 								+ DTZ * (double)KZ/(double)DZ * (   ( grid.u[i][k+1] - (grid.u[i+1][k] - grid.u[i-1][k])/2. ) -
 												  2.*( grid.u[i][k]   - (grid.u[i+1][k] - grid.u[i-1][k])/2. ) +
-												    ( grid.u[i][k-1] - (grid.u[i+1][k] - grid.u[i-1][k])/2. ) ) ;	
-
+												    ( grid.u[i][k-1] - (grid.u[i+1][k] - grid.u[i-1][k])/2. ) ) 	
+#endif
+								;
 		}
 	}
 	/* zero gradient for top and bottom */
@@ -38,7 +39,7 @@ void LeapFrogMethod::compute_du_dt(GridField & grid){
 }
 void LeapFrogMethod::compute_dw_dt(GridField & grid){
 
-	for (int k=1;k<NZ-1;k++){
+	for (int k=2;k<NZ-1;k++){
 		for (int i=1;i<NX-1;i++){
 			grid.wp[i][k] =  - DTX * ( 0.25 * ( grid.u[i+1][k] + grid.u[i+1][k-1]) * ( grid.w[i+1][k] + grid.w[i  ][k] ) 
 								 -0.25 * (grid.u[i  ][k] + grid.u[i  ][k-1]) * ( grid.w[i  ][k] + grid.w[i-1][k] ) )
@@ -46,16 +47,18 @@ void LeapFrogMethod::compute_dw_dt(GridField & grid){
 								 -0.25 * grid.rhou[k-1]* (grid.w[i][k  ] + grid.w[i][k-1])*( grid.w[i][k  ] + grid.w[i][k-1]) ) / grid.rhow[k]
 						- C_P * (double)DT * ( grid.tb[k] + grid.tb[k-1] ) * ( grid.pi[i][k] - grid.pi[i][k-1] ) / (double)DZ 
 						+ GRAVITY * (double)DT * ( ( grid.th[i][k] / grid.tb[k] ) + ( grid.th[i][k-1] / grid.tb[k-1] ) ) 
+#ifdef DIFFUSION						
 						+DTX * (double)KX/(double)DX * (  grid.w[i+1][k]- 2.*grid.w[i][k] + grid.w[i-1][k] ) 			
 						+DTZ * (double)KZ/(double)DZ * (  grid.w[i][k+1]- 2.*grid.w[i][k] + grid.w[i][k-1] )	/* Diffusion Term */
+#endif
 						+ grid.wm[i][k] ;
 		}
 	}
 	
 	/* zero gradient for top and bottom */
-	for (int i=1;i<NX-1;i++){
-		grid.wp[i][0] = grid.wp[i][1] ;
-		grid.wp[i][NZ-1]= grid.wp[i][NZ-2] ;
+	for (int i=1;i<NX;i++){
+		grid.wp[i][0] = grid.wp[i][1] = 0. ;
+		grid.wp[i][NZ-1]= 0. ;
 	}
 	/* Periodic for left and right */
 	for (int k=1;k<NZ-1;k++){
@@ -78,8 +81,10 @@ void LeapFrogMethod::compute_dtheta_dt(GridField & grid){
 								   -0.5 * grid.rhow[k  ] * grid.w[i][k  ] * ( grid.th[i][k  ] + grid.th[i][k-1] ) )
 				- (double)DT / (grid.rhou[k]) * ( grid.rhow[k+1] * grid.w[i][k+1] * ( grid.tb[k+1] - grid.tb[k  ] ) / (double)DZ  
 										  +grid.rhow[k  ] * grid.w[i][k  ] * ( grid.tb[k  ] - grid.tb[k-1] ) / (double)DZ )
+#ifdef DIFFUSION										  
 				+ DTX * (double)KX/(double)DX * (  grid.th[i+1][k]- 2.*grid.th[i][k] + grid.th[i-1][k] ) 			
 				+ DTZ * (double)KZ/(double)DZ * (  grid.th[i][k+1]- 2.*grid.th[i][k] + grid.th[i][k-1] )	/* Diffusion Term */										  				  
+#endif				
 				+ grid.thm[i][k] ;
 		}
 	}
@@ -110,8 +115,10 @@ void LeapFrogMethod::compute_dpi_dt(GridField & grid){
 					( 1./(double)DX * grid.rhou[k] * grid.tb[k] * ( grid.u[i+1][k] - grid.u[i][k] ) 
 					 +1./(double)DZ * ( 0.5 * grid.rhow[k+1] * grid.w[i][k+1] * ( grid.tb[k+1] + grid.tb[k  ] ) 
 							  -0.5 * grid.rhow[k  ] * grid.w[i][k  ] * ( grid.tb[k  ] + grid.tb[k-1] ) ) )
+#ifdef DIFFUSION							  
 				+ DTX * (double)KX/(double)DX * (  grid.pi[i+1][k]- 2.*grid.pi[i][k] + grid.pi[i-1][k] ) 			
 				+ DTZ * (double)KZ/(double)DZ * (  grid.pi[i][k+1]- 2.*grid.pi[i][k] + grid.pi[i][k-1] )	/* Diffusion Term */								  
+#endif			
 				+ grid.pim[i][k] ;
 		}
 	}
@@ -131,11 +138,20 @@ void LeapFrogMethod::compute_dpi_dt(GridField & grid){
 
 }
 void LeapFrogMethod::compute_all(GridField & grid , int timend){
+	FILE * fp_Mat[4] = {NULL};
+	fp_Mat[0] = fopen("th.txt","wb");
+	fp_Mat[1] = fopen("w.txt","wb");
+	fp_Mat[2] = fopen("u.txt","wb");
+	fp_Mat[3] = fopen("pi.txt","wb");
+	
+	
+	
+	
 	
 	int currentTime = 0;
 	
 	// Output Base Condition
-	Outputter::outputCurrentTimestep(grid);
+	Outputter::outputCurrentTimestep(grid,fp_Mat);
 	
 	while ( currentTime < timend){
 
@@ -161,10 +177,16 @@ void LeapFrogMethod::compute_all(GridField & grid , int timend){
 		
 		
 		/* output routine */
-		Outputter::outputCurrentTimestep(grid);
+		Outputter::outputCurrentTimestep(grid,fp_Mat);
 	}
 	
-	printf("Output Time=0 to Time= %d\n",timend);
+	
+	cout << "Plot information" << endl;
+	cout << "dt = " << DT << endl;
+	cout << "start time = " << 0 << endl ;
+	cout << "end time = " << timend << endl ;
+	cout << "OutputGraph per Step = " << grid.GetGraphOutputTime() << endl;
+	
 	return ;
 
 

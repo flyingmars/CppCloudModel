@@ -2,7 +2,7 @@ COMPILER=g++
 CFALGS=-Wall -g 
 CCO=$(COMPILER) $(CFALGS) -c
 CC=$(COMPILER) $(CFALGS)
-RM=rm -rf
+RM=del
 
 OUTPUT=model.exe
 ALLFILES=Outputter.o Initializer.o GridField.o LeapFrogMethod.o
@@ -29,7 +29,7 @@ clean:
 	$(RM) *.exe
 	$(RM) *.txt
 	$(RM) *~
-	clear
+	cls
 
 run:
 

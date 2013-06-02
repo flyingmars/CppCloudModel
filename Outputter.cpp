@@ -18,12 +18,12 @@ void Outputter::output_BaseState(GridField & grid){
 }
 
 
-void Outputter::outputCurrentTimestep(GridField &grid){
+void Outputter::outputCurrentTimestep(GridField &grid, FILE * fp_Mat[4] ){
 	if( grid.GetCurrentTime()/DT % grid.GetGraphOutputTime() == 0 ){
-		output_th(grid);
-		output_w(grid);
-		output_u(grid);
-		output_pi(grid);
+		output_th(grid,fp_Mat[0]);
+		output_w(grid,fp_Mat[1]);
+		output_u(grid,fp_Mat[2]);
+		output_pi(grid,fp_Mat[3]);
 	}
 	return ;
 }
@@ -31,70 +31,56 @@ void Outputter::outputCurrentTimestep(GridField &grid){
 
 
 
-void Outputter::output_th(GridField & grid){
-	char outputString[100]; sprintf(outputString,"./%d_%s.txt",grid.GetCurrentTime(),"th");
-	FILE* fp = fopen(outputString,"wb");
-	
-	
-	
+void Outputter::output_th(GridField & grid,FILE* fp){
+
 	for (int i=1;i<NX-2;i++){
 		for (int k=1;k<NZ-2;k++){
 			fprintf(fp,"%lf ",grid.th[i][k]);
 		}
-		fprintf(fp,"\n");
+		fprintf(fp,"%d ",245145);
 	}
 	
-	fclose(fp);
+	fprintf(fp,"%d ",192168);
 	
 	return ;
 
 }
-void Outputter::output_w(GridField & grid){
-	char outputString[100]; sprintf(outputString,"./%d_%s.txt",grid.GetCurrentTime(),"w");
-	FILE* fp = fopen(outputString,"wb");
-	
-	
+void Outputter::output_w(GridField & grid,FILE* fp){
 	
 	for (int i=1;i<NX-2;i++){
 		for (int k=1;k<NZ-2;k++){
 			fprintf(fp,"%lf ",grid.w[i][k]);
 		}
-		fprintf(fp,"\n");
+		fprintf(fp,"%d ",245145);
 	}
 	
-	fclose(fp);
+	fprintf(fp,"%d ",192168);
 	
 	return ;
 }
-void Outputter::output_u(GridField & grid){
-	char outputString[100]; sprintf(outputString,"./%d_%s.txt",grid.GetCurrentTime(),"u");
-	FILE* fp = fopen(outputString,"wb");
-	
-	
-	
+void Outputter::output_u(GridField & grid,FILE* fp){
+
 	for (int i=1;i<NX-2;i++){
 		for (int k=1;k<NZ-2;k++){
 			fprintf(fp,"%lf ",grid.u[i][k]);
 		}
-		fprintf(fp,"\n");
+		fprintf(fp,"%d ",245145);
 	}
 	
-	fclose(fp);
+	fprintf(fp,"%d ",192168);
 	
 	return ;
 }
-void Outputter::output_pi(GridField & grid){
-	char outputString[100]; sprintf(outputString,"./%d_%s.txt",grid.GetCurrentTime(),"pi");
-	FILE* fp = fopen(outputString,"wb");
-	
+void Outputter::output_pi(GridField & grid,FILE* fp){
+
 	for (int i=1;i<NX-2;i++){
 		for (int k=1;k<NZ-2;k++){
 			fprintf(fp,"%lf ",grid.pi[i][k]);
 		}
-		fprintf(fp,"\n");
+		fprintf(fp,"%d ",245145);
 	}
 	
-	fclose(fp);
+	fprintf(fp,"%d ",192168);
 	
 	return ;
 }

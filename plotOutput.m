@@ -1,5 +1,24 @@
-function outputState = plotOutput(dataType,outputTime)
-    filename = sprintf('%d_%s.txt',outputTime,dataType);
-    graphFile = textread(filename); 
+function outputState = plotOutput(fid)
+	i = 1 ;
+	j = 1 ;
+	
+	getnum = fscanf(fid,'%f',1) ;
+	while( abs(getnum - 192168.0) >= 1E-10)
+		if( abs(getnum - 245145.0) >= 1E-10 )
+			graphFile(i,j) = getnum ;
+			j = j + 1;
+		else
+			rownum = j ;
+			j = 1 ;
+			i = i + 1 ;
+		end
+		
+		getnum = fscanf(fid,'%f',1);
+    end
+    
     contourf(graphFile');
+
+    
+    
+	clear graphFile ;
 end
