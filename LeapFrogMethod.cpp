@@ -38,9 +38,6 @@ void LeapFrogMethod::compute_du_dt(GridField & grid){
 }
 void LeapFrogMethod::compute_dw_dt(GridField & grid){
 
-
-	
-	
 	for (int k=1;k<NZ-1;k++){
 		for (int i=1;i<NX-1;i++){
 			grid.wp[i][k] =  - DTX * ( 0.25 * ( grid.u[i+1][k] + grid.u[i+1][k-1]) * ( grid.w[i+1][k] + grid.w[i  ][k] ) 

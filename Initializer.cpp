@@ -40,6 +40,57 @@ void Initializer::baseState_OneDimension_Initialization(GridField & grid){
 
 }
 
+void Initializer::perturbation_Initialization_Cold(GridField & grid){
+	const double TRIGPI = 4.*atan(1.0);
+	const double imid   =  (NX%2 == 0) ? (double)NX/2 : ((double)NX-1.0)/2 ;
+	const double zcnt   =  3000 ;
+	const double delta  =  5.0;
+	const double radx   =  4000.0 , radz = 2000.0;
+
+
+	
+	double currentRad;
+	double tup,tdn;
+	double z_scalar;
+	
+
+	
+	/* Create Theta perturbation */
+	for (int i=1;i<=NX-2;i++){
+		for (int k=1;k<=NZ-2;k++){
+			z_scalar = DZ * (k - 0.5);
+			currentRad = sqrt( pow( (z_scalar - zcnt)/radz , 2 ) + pow( DX*( i - imid )/radx , 2 ) ) ;
+
+			if ( currentRad >= 1 ){
+				grid.th[i][k] = 0;
+			}else{
+				grid.th[i][k] = 0.5 * delta * ( cos( TRIGPI * currentRad ) + 1 );
+			}
+			/* make sure the first step run correctly */
+			grid.thm[i][k] = grid.th[i][k];
+		}
+	}
+	
+	/* Modify Pressure Adjustment to Initial Temperature Perturbation  */
+
+	for (int i=1; i<=NX-2;i++){
+		grid.pi[i][NZ-1] = 0;
+		
+		for (int k=NZ-2;k>=1;k--) {
+			tup = grid.th[i][k+1]/( grid.tb[k+1] * grid.tb[k+1] );
+			tdn = grid.th[i][k] / (grid.tb[k] * grid.tb[k]) ;
+			grid.pi[i][k] = grid.pi[i][k+1] - 0.5 * ( GRAVITY / C_P ) * ( tup + tdn ) * DZ;
+			/* make sure the first step run correctly */
+			grid.pim[i][k] = grid.pi[i][k];
+		}
+		grid.pi[i][0] = grid.pi[i][1];
+		grid.pim[i][0] = grid.pim[i][1];
+	}
+
+	
+	return;
+}
+
 void Initializer::perturbation_Initialization(GridField & grid){
 	const double TRIGPI = 4.*atan(1.0);
 	const double imid   =  (NX%2 == 0) ? (double)NX/2 : ((double)NX-1.0)/2 ;
