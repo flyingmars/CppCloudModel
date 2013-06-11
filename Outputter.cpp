@@ -19,11 +19,15 @@ void Outputter::output_BaseState(GridField & grid){
 
 
 void Outputter::outputCurrentTimestep(GridField &grid, FILE * fp_Mat[4] ){
-	if( grid.GetCurrentTime()/DT % grid.GetGraphOutputTime() == 0 ){
+	double  divisionResult = grid.GetCurrentTime() / (double)DT  / (double)grid.GetGraphOutputTime() ;
+	int truncatResult =  (int)(divisionResult + 0.5) ;
+	
+	if( abs(divisionResult - (double)truncatResult) < 1E-8  ){
 		output_th(grid,fp_Mat[0]);
 		output_w(grid,fp_Mat[1]);
 		output_u(grid,fp_Mat[2]);
 		output_pi(grid,fp_Mat[3]);
+		cout << "Time = " << grid.GetCurrentTime() << endl ;
 	}
 	return ;
 }

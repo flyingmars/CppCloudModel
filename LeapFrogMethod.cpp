@@ -14,10 +14,8 @@ void LeapFrogMethod::compute_du_dt(GridField & grid){
 														  *( grid.u[i][k-1]+ grid.u[i  ][k  ] )) / grid.rhou[k] 
 							    - DTX * C_P * grid.tb[k] * ( grid.pi[i][k] - grid.pi[i-1][k] ) 
 #ifdef DIFFUSION								
-								+ DTX * (double)KX/(double)DX * (grid.u[i+1][k] - 2.*grid.u[i][k] + grid.u[i-1][k]) /* Diffusion Term */
-								+ DTZ * (double)KZ/(double)DZ * (   ( grid.u[i][k+1] - (grid.u[i+1][k] - grid.u[i-1][k])/2. ) -
-												  2.*( grid.u[i][k]   - (grid.u[i+1][k] - grid.u[i-1][k])/2. ) +
-												    ( grid.u[i][k-1] - (grid.u[i+1][k] - grid.u[i-1][k])/2. ) ) 	
+								+DTX * (double)KX/(double)DX * (  grid.um[i+1][k]- 2.*grid.um[i][k] + grid.um[i-1][k] ) 			
+								+DTZ * (double)KZ/(double)DZ * (  grid.um[i][k+1]- 2.*grid.um[i][k] + grid.um[i][k-1] )	/* Diffusion Term */	
 #endif
 								;
 		}
@@ -48,8 +46,8 @@ void LeapFrogMethod::compute_dw_dt(GridField & grid){
 						- C_P * (double)DT * ( grid.tb[k] + grid.tb[k-1] ) * ( grid.pi[i][k] - grid.pi[i][k-1] ) / (double)DZ 
 						+ GRAVITY * (double)DT * ( ( grid.th[i][k] / grid.tb[k] ) + ( grid.th[i][k-1] / grid.tb[k-1] ) ) 
 #ifdef DIFFUSION						
-						+DTX * (double)KX/(double)DX * (  grid.w[i+1][k]- 2.*grid.w[i][k] + grid.w[i-1][k] ) 			
-						+DTZ * (double)KZ/(double)DZ * (  grid.w[i][k+1]- 2.*grid.w[i][k] + grid.w[i][k-1] )	/* Diffusion Term */
+						+DTX * (double)KX/(double)DX * (  grid.wm[i+1][k]- 2.*grid.wm[i][k] + grid.wm[i-1][k] ) 			
+						+DTZ * (double)KZ/(double)DZ * (  grid.wm[i][k+1]- 2.*grid.wm[i][k] + grid.wm[i][k-1] )	/* Diffusion Term */
 #endif
 						+ grid.wm[i][k] ;
 		}
@@ -82,8 +80,8 @@ void LeapFrogMethod::compute_dtheta_dt(GridField & grid){
 				- (double)DT / (grid.rhou[k]) * ( grid.rhow[k+1] * grid.w[i][k+1] * ( grid.tb[k+1] - grid.tb[k  ] ) / (double)DZ  
 										  +grid.rhow[k  ] * grid.w[i][k  ] * ( grid.tb[k  ] - grid.tb[k-1] ) / (double)DZ )
 #ifdef DIFFUSION										  
-				+ DTX * (double)KX/(double)DX * (  grid.th[i+1][k]- 2.*grid.th[i][k] + grid.th[i-1][k] ) 			
-				+ DTZ * (double)KZ/(double)DZ * (  grid.th[i][k+1]- 2.*grid.th[i][k] + grid.th[i][k-1] )	/* Diffusion Term */										  				  
+				+ DTX * (double)KX/(double)DX * (  grid.thm[i+1][k]- 2.*grid.thm[i][k] + grid.thm[i-1][k] ) 			
+				+ DTZ * (double)KZ/(double)DZ * (  grid.thm[i][k+1]- 2.*grid.thm[i][k] + grid.thm[i][k-1] )	/* Diffusion Term */										  				  
 #endif				
 				+ grid.thm[i][k] ;
 		}
@@ -116,8 +114,8 @@ void LeapFrogMethod::compute_dpi_dt(GridField & grid){
 					 +1./(double)DZ * ( 0.5 * grid.rhow[k+1] * grid.w[i][k+1] * ( grid.tb[k+1] + grid.tb[k  ] ) 
 							  -0.5 * grid.rhow[k  ] * grid.w[i][k  ] * ( grid.tb[k  ] + grid.tb[k-1] ) ) )
 #ifdef DIFFUSION							  
-				+ DTX * (double)KX/(double)DX * (  grid.pi[i+1][k]- 2.*grid.pi[i][k] + grid.pi[i-1][k] ) 			
-				+ DTZ * (double)KZ/(double)DZ * (  grid.pi[i][k+1]- 2.*grid.pi[i][k] + grid.pi[i][k-1] )	/* Diffusion Term */								  
+				+ DTX * (double)KX/(double)DX * (  grid.pim[i+1][k]- 2.*grid.pim[i][k] + grid.pim[i-1][k] ) 			
+				+ DTZ * (double)KZ/(double)DZ * (  grid.pim[i][k+1]- 2.*grid.pim[i][k] + grid.pim[i][k-1] )	/* Diffusion Term */								  
 #endif			
 				+ grid.pim[i][k] ;
 		}
@@ -137,7 +135,7 @@ void LeapFrogMethod::compute_dpi_dt(GridField & grid){
 
 
 }
-void LeapFrogMethod::compute_all(GridField & grid , int timend){
+void LeapFrogMethod::compute_all(GridField & grid , double timend){
 	FILE * fp_Mat[4] = {NULL};
 	fp_Mat[0] = fopen("th.txt","wb");
 	fp_Mat[1] = fopen("w.txt","wb");
@@ -148,7 +146,7 @@ void LeapFrogMethod::compute_all(GridField & grid , int timend){
 	
 	
 	
-	int currentTime = 0;
+	double currentTime = 0.0;
 	
 	// Output Base Condition
 	Outputter::outputCurrentTimestep(grid,fp_Mat);
@@ -172,7 +170,7 @@ void LeapFrogMethod::compute_all(GridField & grid , int timend){
 		}
 
 		/* timestep routine */
-		currentTime += DT ;
+		currentTime += (double)DT ;
 		grid.SetCurrentTime(currentTime);
 		
 		

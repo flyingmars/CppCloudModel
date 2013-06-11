@@ -1,11 +1,9 @@
 #include <iostream>
 #include "LeapFrogMethod.h"
 
-
+GridField grid(PERGRAPH) ;
 
 int main ( int argc , char ** argv ){
-	
-	GridField grid(PERGRAPH) ;
 	
 	
 	Initializer::baseState_OneDimension_Initialization(grid);

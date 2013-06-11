@@ -1,6 +1,7 @@
 #include <cmath>
 #include <cstdio>
 #include <cstring>
+#include <stdlib.h>
 #include "Constant.h"
 #include "Initializer.h"
 

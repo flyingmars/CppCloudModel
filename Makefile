@@ -1,5 +1,5 @@
 COMPILER=g++
-CFALGS=-Wall -g 
+CFALGS=-Wall -g -O3
 CCO=$(COMPILER) $(CFALGS) -c
 CC=$(COMPILER) $(CFALGS)
 RM=del

@@ -16,7 +16,9 @@ function outputState = plotOutput(fid)
 		getnum = fscanf(fid,'%f',1);
     end
     
-    contourf(graphFile');
+    graphFiletemp = graphFile(1:760,1:192);
+    
+    contourf(graphFiletemp');
 
     
     

@@ -83,8 +83,8 @@ for i=starttime:(outputperGraph*dt):endtime
             title(titlestring);    						
     end
     
-    pause(0.01);  
-    if (starttime + dt <= endtime )
+    pause(0.05);
+    if (i + outputperGraph*dt < endtime )
         clf;
     end
 end

@@ -8,7 +8,7 @@ using namespace std;
 class GridField {
 	private :
 		int timePerGraph;
-		int currentTime;
+		double currentTime;
 		
 	public :
 		// Base state arrays
@@ -32,6 +32,6 @@ class GridField {
 		// Get Set Functions
 		void SetGraphOutputTime(int toSet){ timePerGraph = toSet ; }
 		int GetGraphOutputTime(void){ return timePerGraph ; }
-		void SetCurrentTime(int toSet){ currentTime = (toSet >= 0) ? toSet : 0  ; }
-		int GetCurrentTime(void){ return currentTime ; }
+		void SetCurrentTime(double toSet){ currentTime = (toSet >= 0.0) ? toSet : 0.0  ; }
+		double GetCurrentTime(void){ return currentTime ; }
 };

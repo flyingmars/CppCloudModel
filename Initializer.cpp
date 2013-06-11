@@ -7,8 +7,14 @@ void Initializer::baseState_OneDimension_Initialization(GridField & grid){
 	double tbv_previous,tbv_current,tbvavg;
 	
 	grid.pb[1]   = PSURF;
+#ifdef NEUTRAL	
+	grid.tb[1]   = 300.0;
+	grid.qb[1]   = 0;
+#else
 	grid.tb[1]   = base_ThetaBar_Distribution(1);
 	grid.qb[1]   = base_QvBar_Distribution(1);
+#endif
+
 	tbv_previous = grid.tb[1]*(1 + 0.61*grid.qb[1] );
 	
 	grid.pib[1]  = pow(grid.pb[1]/PZERO,x_k) - GRAVITY*0.5*DZ/(C_P*tbv_previous);	
@@ -16,10 +22,14 @@ void Initializer::baseState_OneDimension_Initialization(GridField & grid){
 	grid.rhow[1] = grid.rhou[1];
 	
 	for (int k=2;k<=NZ-2;k++){
-		
+
+#ifdef NEUTRAL	
+		grid.tb[k] = 300.0;
+		grid.qb[k] = 0;
+#else
 		grid.tb[k] = base_ThetaBar_Distribution(k);
 		grid.qb[k] = base_QvBar_Distribution(k);
-
+#endif
 		tbv_current = grid.tb[k]*(1 + 0.61*grid.qb[k] );
 		tbvavg = 0.5 * ( tbv_current + tbv_previous ) ;
 		

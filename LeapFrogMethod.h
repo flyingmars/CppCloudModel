@@ -12,6 +12,6 @@ class LeapFrogMethod{
 		static void compute_dpi_dt(GridField &);
 
 	public :
-		static void compute_all(GridField & , int);
+		static void compute_all(GridField & , double);
 
 };
